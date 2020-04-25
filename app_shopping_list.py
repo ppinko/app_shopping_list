@@ -1,12 +1,16 @@
 import tkinter as tk
-from tkinter import Text, simpledialog, messagebox
+from tkinter import simpledialog, messagebox
 import os
 
 
 def display_shopping_list():
-    for item in items:
-        label = tk.Label(frame, text=item, bg='white')
-        label.pack()
+    if len(items) == 0:
+        main_label = tk.Label(frame, text='The list is empty', bg='white', justify='left')
+        main_label.grid(column=0, row= 0)
+    for i, item in enumerate(items):
+        label = tk.Label(frame, text='{0}. {1}'.format(i+1, item), width=30, height=1, bg='white', anchor='w')
+        label.grid(column=0)
+        i += 1
 
 
 def destroy_widgets():
@@ -43,7 +47,6 @@ root = tk.Tk()  # basis for the whole program. we attach everyhing to root
 root.title('Shopping list')
 
 items = []
-temp_items = None
 
 if os.path.isfile('shopping_list.txt'):
     with open('shopping_list.txt', mode='r') as f:
@@ -71,14 +74,16 @@ buttons.append(clearList)
 removeItem = tk.Button(root, text='Remove item', padx=10, pady=5, fg='black', bg='green', command=remove_item)
 buttons.append(removeItem)
 
-
 for button in buttons:
     button.pack()
 
 # display the saved shopping list
 display_shopping_list()
 
-root.mainloop() # run the program
+# run the program
+root.mainloop()
+
+""" Saving the list at the end of the program """
 
 with open('shopping_list.txt', mode='w') as f:
     for item in items:
