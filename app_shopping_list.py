@@ -1,18 +1,37 @@
 import tkinter as tk
-from tkinter import filedialog, Text, simpledialog
+from tkinter import Text, simpledialog, messagebox
 import os
 
 
-def add_item():
-    for widget in frame.winfo_children():
-        widget.destroy()
-
-    item = simpledialog.askstring(title='', prompt="Item to add", parent=root)
-    items.append(item)
+def display_shopping_list():
     for item in items:
         label = tk.Label(frame, text=item, bg='white')
         label.pack()
 
+
+def destroy_widgets():
+    for widget in frame.winfo_children():
+        widget.destroy()
+
+
+def add_item():
+    destroy_widgets()
+    item = simpledialog.askstring(title='', prompt="Item to add", parent=root)
+    items.append(item)
+    display_shopping_list()
+
+
+def remove_item():
+    destroy_widgets()
+    while True:
+        item = simpledialog.askstring(title='', prompt="Item to remove", parent=root)
+        if item in items:
+            items.remove(item)
+            break
+    display_shopping_list()
+
+
+""" Main program is below """
 
 root = tk.Tk()  # basis for the whole program. we attach everyhing to root
 root.title('Shopping list')
@@ -38,9 +57,7 @@ frame.place(relwidth=0.8, relheight=0.8, relx=0.1, rely=0.1)
 addItem = tk.Button(root, text='Add item', padx=10, pady=5, fg='black', bg='green', command=add_item)
 addItem.pack()
 
-for item in items:
-    label = tk.Label(frame, text=item, bg='white')
-    label.pack()
+display_shopping_list()
 
 root.mainloop() # run the program
 
