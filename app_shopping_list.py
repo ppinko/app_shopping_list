@@ -4,8 +4,10 @@ import os
 
 
 def add_item():
-    item = simpledialog.askstring(title='', prompt="Item to add",
-                                    parent=root)
+    for widget in frame.winfo_children():
+        widget.destroy()
+
+    item = simpledialog.askstring(title='', prompt="Item to add", parent=root)
     items.append(item)
     for item in items:
         label = tk.Label(frame, text=item, bg='white')
@@ -29,5 +31,8 @@ frame.place(relwidth=0.8, relheight=0.8, relx=0.1, rely=0.1)
 addItem = tk.Button(root, text='Add item', padx=10, pady=5, fg='black', bg='green', command=add_item)
 addItem.pack()
 
-
 root.mainloop() # run the program
+
+with open('shopping_list.txt', mode='w') as f:
+    for item in items:
+        f.write(item + ',')
