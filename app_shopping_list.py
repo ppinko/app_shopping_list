@@ -9,10 +9,15 @@ def display_shopping_list():
                               relief='solid', font="Times 18")
         main_label.place(relwidth=0.4, relheight=0.2 ,relx=0.3, rely=0.4)
         # main_label.pack()
-    for i, item in enumerate(items):
-        label = tk.Label(frame, text='{0}. {1}'.format(i+1, item), width=30, height=1, bg='white', anchor='w')
-        label.grid(column=0)
-        i += 1
+    else:
+        counter = tk.Label(frame, text='Shopping list contain {0} item(s):'.format(len(items)),
+                           width=30, height=2, bg='white', anchor='w', font='bold')
+        counter.grid(column=0)
+        for i, item in enumerate(items):
+            label = tk.Label(frame, text='{0}. {1}'.format(i+1, item), width=30, height=1, bg='white',
+                             anchor='w')
+            label.grid(column=0)
+            i += 1
 
 
 def destroy_widgets():
@@ -23,16 +28,22 @@ def destroy_widgets():
 def add_item():
     destroy_widgets()
     item = simpledialog.askstring(title='', prompt="Item to add", parent=root)
-    items.append(item)
+    items.append(item.title())
     display_shopping_list()
 
 
 def remove_item():
     destroy_widgets()
     to_remove = simpledialog.askstring(title='', prompt="Item to remove", parent=root)
-    if to_remove in items:
-        items.remove(to_remove)
-    else:
+    flag = True
+    temp = []
+    for item in items:
+        if to_remove in item:
+            flag = False
+            temp.append(item)
+    for i in temp:
+        items.remove(i)
+    if flag:
         messagebox.showerror("Error", "There is no {0} in the list".format(to_remove))
     display_shopping_list()
 
@@ -47,6 +58,7 @@ def clear_list():
 
 root = tk.Tk()  # basis for the whole program. we attach everyhing to root
 root.title('Shopping list')
+# root.geometry('600x600')
 
 items = []
 
@@ -65,19 +77,14 @@ frame = tk.Frame(root, bg='white')
 frame.place(relwidth=0.8, relheight=0.8, relx=0.1, rely=0.1)
 
 # App buttons
-buttons = []
+addItem = tk.Button(root, text='Add item', pady=5, fg='black', bg='green', command=add_item)
+addItem.place(relwidth=0.2, relx=0.1, rely=0.92)
 
-addItem = tk.Button(root, text='Add item', padx=10, pady=5, fg='black', bg='green', command=add_item)
-buttons.append(addItem)
+clearList = tk.Button(root, text='Clear the list', pady=5, fg='black', bg='red', command=clear_list)
+clearList.place(relwidth=0.2, relx=0.6, rely=0.92)
 
-clearList = tk.Button(root, text='Clear the list', padx=10, pady=5, fg='black', bg='green', command=clear_list)
-buttons.append(clearList)
-
-removeItem = tk.Button(root, text='Remove item', padx=10, pady=5, fg='black', bg='green', command=remove_item)
-buttons.append(removeItem)
-
-for button in buttons:
-    button.pack()
+removeItem = tk.Button(root, text='Remove item', pady=5, fg='black', bg='yellow', command=remove_item)
+removeItem.place(relwidth=0.2, relx=0.35, rely=0.92)
 
 # display the saved shopping list
 display_shopping_list()
