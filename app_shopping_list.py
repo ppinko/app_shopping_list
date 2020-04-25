@@ -31,6 +31,12 @@ def remove_item():
     display_shopping_list()
 
 
+def clear_list():
+    destroy_widgets()
+    items.clear()
+    display_shopping_list()
+
+
 """ Main program is below """
 
 root = tk.Tk()  # basis for the whole program. we attach everyhing to root
@@ -53,10 +59,19 @@ canvas.pack() # attach canvas to root
 frame = tk.Frame(root, bg='white')
 frame.place(relwidth=0.8, relheight=0.8, relx=0.1, rely=0.1)
 
-# adding button to add a product to the list
-addItem = tk.Button(root, text='Add item', padx=10, pady=5, fg='black', bg='green', command=add_item)
-addItem.pack()
+# App buttons
+buttons = []
 
+addItem = tk.Button(root, text='Add item', padx=10, pady=5, fg='black', bg='green', command=add_item)
+buttons.append(addItem)
+
+clearList = tk.Button(root, text='Clear the list', padx=10, pady=5, fg='black', bg='green', command=clear_list)
+buttons.append(clearList)
+
+for button in buttons:
+    button.pack()
+
+# display the saved shopping list
 display_shopping_list()
 
 root.mainloop() # run the program
