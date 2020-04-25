@@ -5,8 +5,10 @@ import os
 
 def display_shopping_list():
     if len(items) == 0:
-        main_label = tk.Label(frame, text='The list is empty', bg='white', justify='left')
-        main_label.grid(column=0, row= 0)
+        main_label = tk.Label(frame, text='The list is empty', bg='green', bd=3,
+                              relief='solid', font="Times 18")
+        main_label.place(relwidth=0.4, relheight=0.2 ,relx=0.3, rely=0.4)
+        # main_label.pack()
     for i, item in enumerate(items):
         label = tk.Label(frame, text='{0}. {1}'.format(i+1, item), width=30, height=1, bg='white', anchor='w')
         label.grid(column=0)
