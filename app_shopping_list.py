@@ -23,11 +23,11 @@ def add_item():
 
 def remove_item():
     destroy_widgets()
-    while True:
-        item = simpledialog.askstring(title='', prompt="Item to remove", parent=root)
-        if item in items:
-            items.remove(item)
-            break
+    to_remove = simpledialog.askstring(title='', prompt="Item to remove", parent=root)
+    if to_remove in items:
+        items.remove(to_remove)
+    else:
+        messagebox.showerror("Error", "There is no {0} in the list".format(to_remove))
     display_shopping_list()
 
 
@@ -67,6 +67,10 @@ buttons.append(addItem)
 
 clearList = tk.Button(root, text='Clear the list', padx=10, pady=5, fg='black', bg='green', command=clear_list)
 buttons.append(clearList)
+
+removeItem = tk.Button(root, text='Remove item', padx=10, pady=5, fg='black', bg='green', command=remove_item)
+buttons.append(removeItem)
+
 
 for button in buttons:
     button.pack()
