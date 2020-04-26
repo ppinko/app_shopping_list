@@ -1,1 +1,1 @@
-Water,Bread,Salad,Cheese,Ham,Eggs,
+Bread,Water,Jam,Flowers,Tea,

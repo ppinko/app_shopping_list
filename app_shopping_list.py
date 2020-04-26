@@ -28,23 +28,25 @@ def destroy_widgets():
 def add_item():
     destroy_widgets()
     item = simpledialog.askstring(title='', prompt="Item to add", parent=root)
-    items.append(item.title())
+    if item is not None:
+        items.append(item.title())
     display_shopping_list()
 
 
 def remove_item():
     destroy_widgets()
     to_remove = simpledialog.askstring(title='', prompt="Item to remove", parent=root)
-    flag = True
-    temp = []
-    for item in items:
-        if to_remove in item:
-            flag = False
-            temp.append(item)
-    for i in temp:
-        items.remove(i)
-    if flag:
-        messagebox.showerror("Error", "There is no {0} in the list".format(to_remove))
+    if to_remove is not None:
+        flag = True
+        temp = []
+        for item in items:
+            if to_remove in item:
+                flag = False
+                temp.append(item)
+        for i in temp:
+            items.remove(i)
+        if flag:
+            messagebox.showerror("Error", "There is no {0} in the list".format(to_remove))
     display_shopping_list()
 
 
