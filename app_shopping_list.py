@@ -16,7 +16,10 @@ def display_shopping_list():
         for i, item in enumerate(items):
             label = tk.Label(frame, text='{0}. {1}'.format(i+1, item), width=30, height=1, bg='white',
                              anchor='w')
-            label.grid(column=0)
+            if i < 30:
+                label.grid(column=0)
+            else:
+                label.grid(row=0, column=300)
             i += 1
 
 
